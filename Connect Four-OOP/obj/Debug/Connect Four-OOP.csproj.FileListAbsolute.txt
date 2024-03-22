@@ -1,0 +1,7 @@
+C:\Users\paula\OneDrive\Escritorio\Paula\Software Development\level2\SODV 1202 OOP\FINAL PROJECT2\Connect Four-OOP\Connect Four-OOP\bin\Debug\Connect Four-OOP.exe.config
+C:\Users\paula\OneDrive\Escritorio\Paula\Software Development\level2\SODV 1202 OOP\FINAL PROJECT2\Connect Four-OOP\Connect Four-OOP\bin\Debug\Connect Four-OOP.exe
+C:\Users\paula\OneDrive\Escritorio\Paula\Software Development\level2\SODV 1202 OOP\FINAL PROJECT2\Connect Four-OOP\Connect Four-OOP\bin\Debug\Connect Four-OOP.pdb
+C:\Users\paula\OneDrive\Escritorio\Paula\Software Development\level2\SODV 1202 OOP\FINAL PROJECT2\Connect Four-OOP\Connect Four-OOP\obj\Debug\Connect Four-OOP.csproj.AssemblyReference.cache
+C:\Users\paula\OneDrive\Escritorio\Paula\Software Development\level2\SODV 1202 OOP\FINAL PROJECT2\Connect Four-OOP\Connect Four-OOP\obj\Debug\Connect Four-OOP.csproj.CoreCompileInputs.cache
+C:\Users\paula\OneDrive\Escritorio\Paula\Software Development\level2\SODV 1202 OOP\FINAL PROJECT2\Connect Four-OOP\Connect Four-OOP\obj\Debug\Connect Four-OOP.exe
+C:\Users\paula\OneDrive\Escritorio\Paula\Software Development\level2\SODV 1202 OOP\FINAL PROJECT2\Connect Four-OOP\Connect Four-OOP\obj\Debug\Connect Four-OOP.pdb
