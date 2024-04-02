@@ -40,14 +40,10 @@ namespace Connect_Four_OOP
                 return base.ToString(); // use the inf set on the base class.
             }
         }
-        //Creating Model class: implements intermediate steps and holds information about the game.
-        //methods:  Create the board, Validate Win, Validate Draw, Print messages.
 
         // Model class representing the board:
-
-
-        // creating Model class implements intermediate steps and holds information about the game
-        // method: initialize and create the board (#) the board, validation Win, validation Draw, Print messages
+        //Creating Model class: implements intermediate steps and holds information about the game.
+        //methods:  Create the board, Validate Win, Validate Draw, Print messages.
         public class Board
         {
             // Define the dimensions of the board
@@ -57,9 +53,19 @@ namespace Connect_Four_OOP
             // Create the 2D array to represent the board
             private char[,] board;
 
+
+
+
+
+
+
+
             // Constructor to initialize the board
             public Board()
             {
+
+
+
                 board = new char[rows, columns];
                 initializeBoard();
             }
@@ -168,7 +174,24 @@ namespace Connect_Four_OOP
             }
         }
 
-        static void Main(string[] args)
+        //Method to validate is there is a win
+        public bool validationDraw()
+        {
+            for (int row = 0; row < rows; row++)
+            {
+                for (int col = 0; col < columns; col++)
+                {
+                    if (board[row, col] == '#')
+                        return false;
+                }
+            }
+            Console.WriteLine($"The board is full. There is a Draw");
+            return true;
+        }
+    
+
+
+    static void Main(string[] args)
         {
             // Instance of (base class Player)
             humanPlayer player1 = new humanPlayer("Player X", 'X');
@@ -181,7 +204,7 @@ namespace Connect_Four_OOP
             // Instance of board class
             Board board = new Board();
 
-            // Iniciar el juego
+            // Start the game
             board.printBoard();
 
 
