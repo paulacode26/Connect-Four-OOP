@@ -11,12 +11,12 @@ namespace Connect_Four_OOP
     internal class Program
     {
         //create player abstract class:
-        public abstract class player
+        public abstract class Player
         {
             public string Name;
             public char Symbol;
 
-            public player(string name, char symbol)
+            public Player(string name, char symbol)
             {
                 Name = name;
                 Symbol = symbol;
@@ -28,7 +28,7 @@ namespace Connect_Four_OOP
             }
         }
         // Subclass of the abstract class for human player:
-        public class humanPlayer : player
+        public class humanPlayer : Player
         {
             public humanPlayer(string name, char symbol) : base(name, symbol)
             {
@@ -47,21 +47,21 @@ namespace Connect_Four_OOP
         public class Board
         {
             // Define the dimensions of the board
-            private int rows = 6;
-            private int columns = 7;
+            public const int rows = 6;
+            public const int columns = 7;
 
             // Create the 2D array to represent the board
             private char[,] board;
 
-
-
-
+            public Player player1; // the first player in the game X
+            public Player player2; // the Second player in the game 0.
+            public Player currentPlayerTurn; // the player who is currently taking their turn.
 
 
 
 
             // Constructor to initialize the board
-            public Board()
+            public Board(Player player1, Player player2)
             {
 
 
