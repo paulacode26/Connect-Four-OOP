@@ -10,6 +10,30 @@ namespace Connect_Four_OOP
 {
     internal class Program
     {
+        //Interface to create the board. It allows changing the numbers of columns and rows easily.
+        public interface IBoardInitializer
+        {
+            void InitializeBoard(int rows, int columns);
+            void PrintBoard();
+        }
+
+        class PatternGenerator //business logic
+        {
+            IBoardInitializer p;
+            public PatternGenerator(IBoardInitializer obj)
+            {
+                p = obj;
+            }
+            public void InitializeBoard(int rows, int columns)
+            {
+                p.InitializeBoard(rows, columns);
+            }
+            public void PrintBoard()
+            {
+                p.PrintBoard();
+            }
+        }
+
         //create player abstract class:
         public abstract class Player
         {
@@ -27,6 +51,7 @@ namespace Connect_Four_OOP
                 return $"Name: {Name}, Symbol: {Symbol}";
             }
         }
+
         // Subclass of the abstract class for human player:
         public class humanPlayer : Player
         {
@@ -44,14 +69,13 @@ namespace Connect_Four_OOP
         // Model class representing the board:
         //Creating Model class: implements intermediate steps and holds information about the game.
         //methods:  Create the board, Validate Win, Validate Draw, Print messages.
-        public class Board
+        public class BoardInitializer : IBoardInitializer
         {
-            // Define the dimensions of the board
-            public const int rows = 6;
-            public const int columns = 7;
+            public char[,] board;
+            private int rows;
+            private int columns;
 
-            // Create the 2D array to represent the board
-            private char[,] board;
+            
 
             public Player player1; // the first player in the game X
             public Player player2; // the Second player in the game 0.
