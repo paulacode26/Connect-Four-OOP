@@ -66,9 +66,6 @@ namespace Connect_Four_OOP
             }
         }
 
-        // Model class representing the board:
-        //Creating Model class: implements intermediate steps and holds information about the game.
-        //methods:  Create the board, Validate Win, Validate Draw, Print messages.
         public class BoardInitializer : IBoardInitializer
         {
             public char[,] board;
@@ -114,8 +111,28 @@ namespace Connect_Four_OOP
             }
         }
 
+        //Creating Model class: implements intermediate steps and holds information about the game.
+        //methods: Validate Win, Validate Draw, Print messages.
         public class GameLogic
-        { 
+        {
+            public char[,] board;
+            public Player player1;
+            public Player player2;
+            public Player currentPlayerTurn;
+            public bool gameOver = false;
+            public BoardInitializer boardInitializer;
+
+            public bool GameOver { get { return gameOver; } }
+
+            public GameLogic(Player player1, Player player2, BoardInitializer boardInitializer)
+            {
+                this.player1 = player1;
+                this.player2 = player2;
+                currentPlayerTurn = player1;
+                this.boardInitializer = boardInitializer;
+                this.board = boardInitializer.board;
+            }
+
             //Method to validate if there is a win
             public bool validationWin(int row, int col)
             {
