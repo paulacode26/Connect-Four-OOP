@@ -75,28 +75,11 @@ namespace Connect_Four_OOP
             private int rows;
             private int columns;
 
-            
-
-            public Player player1; // the first player in the game X
-            public Player player2; // the Second player in the game 0.
-            public Player currentPlayerTurn; // the player who is currently taking their turn.
-
-
-
-
-            // Constructor to initialize the board
-            public Board(Player player1, Player player2)
+            public void InitializeBoard(int rows, int columns)
             {
-
-
-
+                this.rows = rows;
+                this.columns = columns;
                 board = new char[rows, columns];
-                initializeBoard();
-            }
-
-            // Method to initialize the board with '#' characters
-            public void initializeBoard()
-            {
                 for (int row = 0; row < rows; row++)
                 {
                     for (int col = 0; col < columns; col++)
@@ -106,11 +89,9 @@ namespace Connect_Four_OOP
                 }
             }
 
-            // Method to print the board
-            public void printBoard()
+            public void PrintBoard()
             {
-                Console.Clear(); //Clear the console screen to remove any previous output create by white loop. and provide a refreshed interface for the next turn.
-                                 // The player interacts only with the initial board, updating registers instead of creating new ones.
+                Console.Clear();
 
                 Console.WriteLine("Connect 4 Game Development Project:");
                 Console.WriteLine("                                  ");
@@ -123,10 +104,18 @@ namespace Connect_Four_OOP
                     }
                     Console.WriteLine("|");
                 }
-                Console.WriteLine("| -------------------  |");
-                Console.WriteLine("  1  2  3  4  5  6  7   "); // Print column numbers below the board
-            }
 
+                Console.Write("  ");
+                for (int col = 0; col < columns; col++)
+                {
+                    Console.Write((col + 1) + "  ");
+                }
+                Console.WriteLine(" ");
+            }
+        }
+
+        public class GameLogic
+        { 
             //Method to validate if there is a win
             public bool validationWin(int row, int col)
             {
@@ -225,11 +214,12 @@ namespace Connect_Four_OOP
             Console.WriteLine(player2);
 
 
-            // Instance of board class
-            Board board = new Board();
+            // Initialize a new board with 6 rows and 7 columns.
+            BoardInitializer boardInitializer = new BoardInitializer();
+            boardInitializer.InitializeBoard(6, 7);
+            boardInitializer.PrintBoard();
 
-            // Start the game
-            board.printBoard();
+            
 
 
         }
