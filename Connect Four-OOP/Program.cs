@@ -180,6 +180,24 @@ namespace Connect_Four_OOP
                 }
             }
 
+            // Method to handle player move and game logic
+            private void HandlePlayerMove(int column)
+            {
+                if (!gameOver)
+                {
+                    int row = GetAvailableRow(column - 1);
+                    board[row, column - 1] = currentPlayerTurn.Symbol;
+
+                    // Check if the game is over after the player's move
+                    if (ValidationWin(row, column - 1) || ValidationDraw())
+                    {
+                        gameOver = true;
+                    }
+
+                    // Switch to the next player's turn
+                    currentPlayerTurn = (currentPlayerTurn == player1) ? player2 : player1;
+                }
+            }
             //Method to validate if there is a win
             public bool validationWin(int row, int col)
             {
