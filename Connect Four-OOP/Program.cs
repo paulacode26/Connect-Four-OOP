@@ -133,6 +133,53 @@ namespace Connect_Four_OOP
                 this.board = boardInitializer.board;
             }
 
+            public void StartGame()
+            {
+                do
+                {
+                    // Print the board and current player's turn
+                    boardInitializer.PrintBoard();
+                    Console.WriteLine($"It's {currentPlayerTurn.Name}'s turn ({currentPlayerTurn.Symbol}):");
+
+                    // Prompt the player to enter a column number
+                    int column = GetColumnNumber();
+
+                    // Handle player input and game logic
+                    HandlePlayerMove(column);
+
+                    // Check if the game is over
+                    if (GameOver)
+                    {
+                        // Prompt the player to restart or exit the game
+                        PromptRestartOrExit();
+                    }
+                } while (!GameOver);
+            }
+
+            // Method to get the column number from the player
+            private int GetColumnNumber()
+            {
+                while (true)
+                {
+                    Console.Write("Please enter a column number between 1 and 7: ");
+                    if (int.TryParse(Console.ReadLine(), out int column))
+                    {
+                        if (column < 1 || column > boardInitializer.board.GetLength(1))
+                        {
+                            Console.WriteLine("Incorrect column number. Please enter a number between 1 and 7.");
+                        }
+                        else
+                        {
+                            return column;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Incorrect input. Please provide a number between 1 and 7.");
+                    }
+                }
+            }
+
             //Method to validate if there is a win
             public bool validationWin(int row, int col)
             {
