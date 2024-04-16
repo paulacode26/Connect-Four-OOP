@@ -189,7 +189,7 @@ namespace Connect_Four_OOP
                     board[row, column - 1] = currentPlayerTurn.Symbol;
 
                     // Check if the game is over after the player's move
-                    if (ValidationWin(row, column - 1) || ValidationDraw())
+                    if (validationWin(row, column - 1) || ValidationDraw())
                     {
                         gameOver = true;
                     }
@@ -235,10 +235,21 @@ namespace Connect_Four_OOP
                 } while (input != "1" && input != "0");
             }
 
+            // Method to restart the game
+            private void RestartGame()
+            {
+                gameOver = true;
+                boardInitializer.InitializeBoard(boardInitializer.board.GetLength(0), boardInitializer.board.GetLength(1));
+                currentPlayerTurn = player1;
+            }
+
+
             //Method to validate if there is a win
             public bool validationWin(int row, int col)
             {
                 char symbol = board[row, col];
+                int rows = boardInitializer.board.GetLength(0);
+                int columns = boardInitializer.board.GetLength(1);
 
                 // Check for horizontal win
                 for (int c = 0; c <= columns - 4; c++)
@@ -248,7 +259,7 @@ namespace Connect_Four_OOP
                         board[row, c + 2] == symbol &&
                         board[row, c + 3] == symbol)
                     {
-                        printBoard(); //If there is a win print 4 symbols to the board before showing the message.
+                        boardInitializer.PrintBoard(); //If there is a win print 4 symbols to the board before showing the message.
                         Console.WriteLine($"It is a Connect 4. {currentPlayerTurn.Name} wins!");
                         return true;
                     }
@@ -262,7 +273,7 @@ namespace Connect_Four_OOP
                         board[r + 2, col] == symbol &&
                         board[r + 3, col] == symbol)
                     {
-                        printBoard(); //If there is a win print 4 symbols to the board before showing the message.
+                        boardInitializer.PrintBoard();
                         Console.WriteLine($"It is a Connect 4. {currentPlayerTurn.Name} wins!");
                         return true;
                     }
@@ -278,7 +289,7 @@ namespace Connect_Four_OOP
                             board[r + 2, c + 2] == symbol &&
                             board[r + 3, c + 3] == symbol)
                         {
-                            printBoard(); //If there is a win print 4 symbols to the board before showing the message.
+                            boardInitializer.PrintBoard();
                             Console.WriteLine($"It is a Connect 4. {currentPlayerTurn.Name} wins!");
                             return true;
                         }
@@ -295,7 +306,7 @@ namespace Connect_Four_OOP
                             board[r - 2, c + 2] == symbol &&
                             board[r - 3, c + 3] == symbol)
                         {
-                            printBoard(); //If there is a win print 4 symbols to the board before showing the message.
+                            boardInitializer.PrintBoard();
                             Console.WriteLine($"It is a Connect 4. {currentPlayerTurn.Name} wins!");
                             return true;
                         }
@@ -304,21 +315,19 @@ namespace Connect_Four_OOP
 
                 return false;
             }
-        }
 
-        //Method to validate is there is a win
-        public bool validationDraw()
-        {
-            for (int row = 0; row < rows; row++)
+            //Method to validate is there is a win
+            public bool ValidationDraw()
             {
-                for (int col = 0; col < columns; col++)
+                foreach (var cell in boardInitializer.board)
                 {
-                    if (board[row, col] == '#')
+                    if (cell == '#')
                         return false;
                 }
+                boardInitializer.PrintBoard();
+                Console.WriteLine($"The board is full. There is a Draw");
+                return true;
             }
-            Console.WriteLine($"The board is full. There is a Draw");
-            return true;
         }
     
 
