@@ -198,6 +198,18 @@ namespace Connect_Four_OOP
                     currentPlayerTurn = (currentPlayerTurn == player1) ? player2 : player1;
                 }
             }
+
+            // Method to get the first available row in the selected column
+            private int GetAvailableRow(int column)
+            {
+                int row = boardInitializer.board.GetLength(0) - 1;
+                while (row >= 0 && board[row, column] != '#')
+                {
+                    row--;
+                }
+                return row;
+            }
+
             //Method to validate if there is a win
             public bool validationWin(int row, int col)
             {
