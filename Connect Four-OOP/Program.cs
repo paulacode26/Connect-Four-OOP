@@ -210,6 +210,31 @@ namespace Connect_Four_OOP
                 return row;
             }
 
+            // Method to prompt the player to restart or exit the game
+            private void PromptRestartOrExit()
+            {
+                string input;
+                do
+                {
+                    Console.Write("Restart? Yes(1)  No(0): ");
+                    input = Console.ReadLine();
+
+                    switch (input)
+                    {
+                        case "1":
+                            RestartGame();
+                            break;
+                        case "0":
+                            Console.WriteLine("\nExiting game. Thank you for playing!");
+                            Environment.Exit(0);
+                            break;
+                        default:
+                            Console.WriteLine("Invalid input. Please enter either '1' to restart or '0' to continue.");
+                            break;
+                    }
+                } while (input != "1" && input != "0");
+            }
+
             //Method to validate if there is a win
             public bool validationWin(int row, int col)
             {
