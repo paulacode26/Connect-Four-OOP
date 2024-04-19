@@ -128,8 +128,26 @@ namespace Connect_Four_OOP
             }
         }
 
+        private static void HumanVsHuman()
+        {
+            // Create two human players with symbols 'X' and 'O' respectively.
+            HumanPlayer player1 = new HumanPlayer("Player X", 'X');
+            HumanPlayer player2 = new HumanPlayer("Player O", 'O');
 
-        public class BoardInitializer : IBoardInitializer
+            // Initialize a new board with 6 rows and 7 columns.
+            BoardInitializer boardInitializer = new BoardInitializer();
+            boardInitializer.InitializeBoard(6, 7);
+            boardInitializer.PrintBoard();
+
+            // Initialize a new game with the created players and board.
+            GameLogic game = new GameLogic(player1, player2, boardInitializer);
+
+            // Start the game.
+            game.StartGame();
+        }
+    }
+
+    public class BoardInitializer : IBoardInitializer
         {
             public char[,] board;
             private int rows;
