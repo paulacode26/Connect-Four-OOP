@@ -8,8 +8,6 @@ using static Connect_Four_OOP.Program;
 
 namespace Connect_Four_OOP
 {
-    internal class Program
-    {
         //Interface to create the board. It allows changing the numbers of columns and rows easily.
         public interface IBoardInitializer
         {
@@ -52,8 +50,8 @@ namespace Connect_Four_OOP
             }
         }
 
-        // Subclass of the abstract class for human player:
-        public class humanPlayer : Player
+    // The HumanPlayer class Inherits from the Player abstract class to defines the behavior to players, such us their name and symbol.
+    public class humanPlayer : Player
         {
             public humanPlayer(string name, char symbol) : base(name, symbol)
             {
@@ -64,6 +62,51 @@ namespace Connect_Four_OOP
             {
                 return base.ToString(); // use the inf set on the base class.
             }
+        }
+
+    // Controller Class: it handles the inicial menu where users can select options to start the game or exit the program
+    public class Menu
+    {
+        //Indicator if human players were selected.If the player already selected 1 when the game resets, it won't show the initial menu.
+        private static bool humanPlayersSelected = false;
+
+        public static void InitialMenu()
+        {
+
+
+            while (true)
+            {
+                if (!humanPlayersSelected) // Check if human players have not been selected yet
+                {
+                    Console.WriteLine("Object-Oriented Programming Project 'Connect Four'!\n");
+                    Console.WriteLine("Please, Enter your choice:\n");
+                    Console.WriteLine("Enter 1 for playing Human VS Human game");
+                    Console.WriteLine("Enter 2 for Exit\n");
+
+                    int sel = GetSelection();
+
+                    if (sel == 2)
+                    {
+                        Console.WriteLine("\nExiting game. Thank you for playing!");
+                        break;
+                    }
+                    else if (sel == 1)
+                    {
+                        humanPlayersSelected = true; // Set the indicator to true when human players are selected
+                        HumanVsHuman(); // Call the method to start the human players game
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nInvalid input. Please enter either the number  1 or 2.\n");
+                    }
+                }
+                else
+                {
+                    // If human players are already selected, directly show the board
+                    HumanVsHuman();
+                }
+            }
+
         }
 
         public class BoardInitializer : IBoardInitializer
@@ -331,7 +374,8 @@ namespace Connect_Four_OOP
         }
     
 
-
+    class Program
+    { 
     static void Main(string[] args)
         {
             // Instance of (base class Player)
@@ -346,9 +390,6 @@ namespace Connect_Four_OOP
             BoardInitializer boardInitializer = new BoardInitializer();
             boardInitializer.InitializeBoard(6, 7);
             boardInitializer.PrintBoard();
-
-            
-
 
         }
     }
