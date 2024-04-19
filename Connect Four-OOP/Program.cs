@@ -109,6 +109,26 @@ namespace Connect_Four_OOP
 
         }
 
+        // Prompt the user to select an option (1-2) and return the selected option.
+        private static int GetSelection()
+        {
+            while (true)
+            {
+                Console.Write("Select an option (1-2): ");
+                string select = Console.ReadLine();
+
+                if (int.TryParse(select, out int sel))
+                {
+                    return sel;
+                }
+                else
+                {
+                    Console.WriteLine("\nInvalid input. Please enter a number.\n");
+                }
+            }
+        }
+
+
         public class BoardInitializer : IBoardInitializer
         {
             public char[,] board;
