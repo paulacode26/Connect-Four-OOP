@@ -51,9 +51,9 @@ namespace Connect_Four_OOP
         }
 
     // The HumanPlayer class Inherits from the Player abstract class to defines the behavior to players, such us their name and symbol.
-    public class humanPlayer : Player
+    public class HumanPlayer : Player
         {
-            public humanPlayer(string name, char symbol) : base(name, symbol)
+            public HumanPlayer(string name, char symbol) : base(name, symbol)
             {
 
             }
@@ -72,13 +72,11 @@ namespace Connect_Four_OOP
 
         public static void InitialMenu()
         {
-
-
             while (true)
             {
                 if (!humanPlayersSelected) // Check if human players have not been selected yet
                 {
-                    Console.WriteLine("Object-Oriented Programming Project 'Connect Four'!\n");
+                    Console.WriteLine("Object-Oriented Programming Project 'Connect Four'\n");
                     Console.WriteLine("Please, Enter your choice:\n");
                     Console.WriteLine("Enter 1 for playing Human VS Human game");
                     Console.WriteLine("Enter 2 for Exit\n");
@@ -130,19 +128,32 @@ namespace Connect_Four_OOP
 
         private static void HumanVsHuman()
         {
-            // Create two human players with symbols 'X' and 'O' respectively.
-            HumanPlayer player1 = new HumanPlayer("Player X", 'X');
-            HumanPlayer player2 = new HumanPlayer("Player O", 'O');
+            // Prompt the user to enter player 1's name
+            Console.Write("Enter player 1's name: ");
+            string player1Name = Console.ReadLine();
 
-            // Initialize a new board with 6 rows and 7 columns.
+            // Prompt the user to enter player 2's name
+            Console.Write("Enter player 2's name: ");
+            string player2Name = Console.ReadLine();
+
+            // Create a new HumanPlayer instance for player 1 with the provided name and symbol 'X'
+            HumanPlayer player1 = new HumanPlayer(player1Name, 'X');
+
+            // Create a new HumanPlayer instance for player 2 with the provided name and symbol 'O'
+            HumanPlayer player2 = new HumanPlayer(player2Name, 'O');
+
+            // Initialize a new board with 6 rows and 7 columns
             BoardInitializer boardInitializer = new BoardInitializer();
             boardInitializer.InitializeBoard(6, 7);
+
+            // Print the initialized board to the console
             boardInitializer.PrintBoard();
 
-            // Initialize a new game with the created players and board.
+            // Initialize a new game with the created players and board
             GameLogic game = new GameLogic(player1, player2, boardInitializer);
 
-            // Start the game.
+            // Start the game by invoking the StartGame() method, which initiates the game loop
+            // where players take turns making moves until the game is over.
             game.StartGame();
         }
     }
@@ -169,9 +180,10 @@ namespace Connect_Four_OOP
 
             public void PrintBoard()
             {
-                Console.Clear();
+                Console.Clear(); //Clear the console screen to remove any previous output create by white loop. and provide a refreshed interface for the next turn.
 
-                Console.WriteLine("Connect 4 Game Development Project:");
+
+            Console.WriteLine("Connect 4 Game Development Project:");
                 Console.WriteLine("                                  ");
                 for (int row = 0; row < rows; row++)
                 {
@@ -192,9 +204,9 @@ namespace Connect_Four_OOP
             }
         }
 
-        //Creating Model class: implements intermediate steps and holds information about the game.
-        //methods: Validate Win, Validate Draw, Print messages.
-        public class GameLogic
+    //Creating Model class: implements intermediate steps and holds information about the game.
+    //initializing the board, managing player turns, handling player moves, ckeckins for wins or draws,prompting the user to restart or exit
+    public class GameLogic
         {
             public char[,] board;
             public Player player1;
@@ -411,24 +423,11 @@ namespace Connect_Four_OOP
             }
         }
     
-
     class Program
     { 
     static void Main(string[] args)
         {
-            // Instance of (base class Player)
-            humanPlayer player1 = new humanPlayer("Player X", 'X');
-            humanPlayer player2 = new humanPlayer("Player O", 'O');
-
-            Console.WriteLine(player1);
-            Console.WriteLine(player2);
-
-
-            // Initialize a new board with 6 rows and 7 columns.
-            BoardInitializer boardInitializer = new BoardInitializer();
-            boardInitializer.InitializeBoard(6, 7);
-            boardInitializer.PrintBoard();
-
+            Menu.InitialMenu();
         }
     }
 
