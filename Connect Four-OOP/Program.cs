@@ -32,8 +32,54 @@ namespace Connect_Four_OOP
             }
         }
 
-        //create player abstract class:
-        public abstract class Player
+    public class BoardInitializer : IBoardInitializer
+    {
+        public char[,] board;
+        private int rows;
+        private int columns;
+
+        public void InitializeBoard(int rows, int columns)
+        {
+            this.rows = rows;
+            this.columns = columns;
+            board = new char[rows, columns];
+            for (int row = 0; row < rows; row++)
+            {
+                for (int col = 0; col < columns; col++)
+                {
+                    board[row, col] = '#';
+                }
+            }
+        }
+
+        public void PrintBoard()
+        {
+            Console.Clear(); //Clear the console screen to remove any previous output create by white loop. and provide a refreshed interface for the next turn.
+
+
+            Console.WriteLine("Connect 4 Game Development Project:");
+            Console.WriteLine("                                  ");
+            for (int row = 0; row < rows; row++)
+            {
+                Console.Write("| ");
+                for (int col = 0; col < columns; col++)
+                {
+                    Console.Write(board[row, col] + "  ");
+                }
+                Console.WriteLine("|");
+            }
+
+            Console.Write("  ");
+            for (int col = 0; col < columns; col++)
+            {
+                Console.Write((col + 1) + "  ");
+            }
+            Console.WriteLine(" ");
+        }
+    }
+
+    //create player abstract class:
+    public abstract class Player
         {
             public string Name;
             public char Symbol;
@@ -69,12 +115,14 @@ namespace Connect_Four_OOP
     {
         //Indicator if human players were selected.If the player already selected 1 when the game resets, it won't show the initial menu.
         private static bool humanPlayersSelected = false;
+        private static string player1Name;
+        private static string player2Name;
 
         public static void InitialMenu()
         {
             while (true)
             {
-                if (!humanPlayersSelected) // Check if human players have not been selected yet
+                if (!humanPlayersSelected || player1Name == null || player2Name == null)
                 {
                     Console.WriteLine("Object-Oriented Programming Project 'Connect Four'\n");
                     Console.WriteLine("Please, Enter your choice:\n");
@@ -90,7 +138,10 @@ namespace Connect_Four_OOP
                     }
                     else if (sel == 1)
                     {
-                        humanPlayersSelected = true; // Set the indicator to true when human players are selected
+                        if (!humanPlayersSelected)
+                        {
+                            humanPlayersSelected = true; // Set the indicator to true when human players are selected
+                        }
                         HumanVsHuman(); // Call the method to start the human players game
                     }
                     else
@@ -100,7 +151,7 @@ namespace Connect_Four_OOP
                 }
                 else
                 {
-                    // If human players are already selected, directly show the board
+                    // If human players are already selected and names are provided, directly show the board
                     HumanVsHuman();
                 }
             }
@@ -128,13 +179,16 @@ namespace Connect_Four_OOP
 
         private static void HumanVsHuman()
         {
-            // Prompt the user to enter player 1's name
-            Console.Write("Enter player 1's name: ");
-            string player1Name = Console.ReadLine();
+            if (player1Name == null || player2Name == null)
+            {
+                // Prompt the user to enter player 1's name
+                Console.Write("Enter player 1's name: ");
+                player1Name = Console.ReadLine();
 
-            // Prompt the user to enter player 2's name
-            Console.Write("Enter player 2's name: ");
-            string player2Name = Console.ReadLine();
+                // Prompt the user to enter player 2's name
+                Console.Write("Enter player 2's name: ");
+                player2Name = Console.ReadLine();
+            }
 
             // Create a new HumanPlayer instance for player 1 with the provided name and symbol 'X'
             HumanPlayer player1 = new HumanPlayer(player1Name, 'X');
@@ -157,52 +211,6 @@ namespace Connect_Four_OOP
             game.StartGame();
         }
     }
-
-    public class BoardInitializer : IBoardInitializer
-        {
-            public char[,] board;
-            private int rows;
-            private int columns;
-
-            public void InitializeBoard(int rows, int columns)
-            {
-                this.rows = rows;
-                this.columns = columns;
-                board = new char[rows, columns];
-                for (int row = 0; row < rows; row++)
-                {
-                    for (int col = 0; col < columns; col++)
-                    {
-                        board[row, col] = '#';
-                    }
-                }
-            }
-
-            public void PrintBoard()
-            {
-                Console.Clear(); //Clear the console screen to remove any previous output create by white loop. and provide a refreshed interface for the next turn.
-
-
-            Console.WriteLine("Connect 4 Game Development Project:");
-                Console.WriteLine("                                  ");
-                for (int row = 0; row < rows; row++)
-                {
-                    Console.Write("| ");
-                    for (int col = 0; col < columns; col++)
-                    {
-                        Console.Write(board[row, col] + "  ");
-                    }
-                    Console.WriteLine("|");
-                }
-
-                Console.Write("  ");
-                for (int col = 0; col < columns; col++)
-                {
-                    Console.Write((col + 1) + "  ");
-                }
-                Console.WriteLine(" ");
-            }
-        }
 
     //Creating Model class: implements intermediate steps and holds information about the game.
     //initializing the board, managing player turns, handling player moves, ckeckins for wins or draws,prompting the user to restart or exit
@@ -273,38 +281,58 @@ namespace Connect_Four_OOP
                 }
             }
 
-            // Method to handle player move and game logic
-            private void HandlePlayerMove(int column)
+        // Method to handle player move and game logic
+        private void HandlePlayerMove(int column)
+        {
+            if (!gameOver)
             {
-                if (!gameOver)
+                while (true)
                 {
+                    // Get the first available row in the selected column
                     int row = GetAvailableRow(column - 1);
-                    board[row, column - 1] = currentPlayerTurn.Symbol;
-
-                    // Check if the game is over after the player's move
-                    if (validationWin(row, column - 1) || ValidationDraw())
+                    if (row == -1)
                     {
-                        gameOver = true;
+                        // Column full, display message and ask the player to select another column
+                        Console.WriteLine($"Column {column} is full. Please select another column.");
+                        // Prompt the player to enter a column number again
+                        column = GetColumnNumber();
                     }
+                    else
+                    {
+                        // Place the player's symbol at the selected position
+                        board[row, column - 1] = currentPlayerTurn.Symbol;
 
-                    // Switch to the next player's turn
-                    currentPlayerTurn = (currentPlayerTurn == player1) ? player2 : player1;
+                        // Check if the game is over after the player's move
+                        if (ValidationWin(row, column - 1) || ValidationDraw())
+                        {
+                            gameOver = true;
+                        }
+
+                        // Switch to the next player's turn
+                        currentPlayerTurn = (currentPlayerTurn == player1) ? player2 : player1;
+
+                        break; // Exit the loop if the column is valid
+                    }
                 }
             }
+        }
 
-            // Method to get the first available row in the selected column
-            private int GetAvailableRow(int column)
+        // Method to get the first available row in the selected column
+        private int GetAvailableRow(int column)
+        {
+            // Iterate through the rows from bottom to top in the selected column
+            for (int row = boardInitializer.board.GetLength(0) - 1; row >= 0; row--)
             {
-                int row = boardInitializer.board.GetLength(0) - 1;
-                while (row >= 0 && board[row, column] != '#')
+                if (board[row, column] == '#')
                 {
-                    row--;
+                    return row; // Return the current row if the cell is empty
                 }
-                return row;
             }
+            return -1; // Return -1 if the column is full
+        }
 
-            // Method to prompt the player to restart or exit the game
-            private void PromptRestartOrExit()
+        // Method to prompt the player to restart or exit the game
+        private void PromptRestartOrExit()
             {
                 string input;
                 do
@@ -338,7 +366,7 @@ namespace Connect_Four_OOP
 
 
             //Method to validate if there is a win
-            public bool validationWin(int row, int col)
+            public bool ValidationWin(int row, int col)
             {
                 char symbol = board[row, col];
                 int rows = boardInitializer.board.GetLength(0);
